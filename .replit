@@ -1,0 +1,55 @@
+modules = ["nodejs-20", "php-8.2", "web"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+APP_NAME = "Laravel"
+APP_ENV = "local"
+APP_DEBUG = "true"
+APP_URL = "https://644bb624-5fca-45b2-8803-1d51e902b91e-00-3voio0b03f01x.worf.replit.dev"
+LOG_CHANNEL = "stack"
+LOG_LEVEL = "debug"
+DB_CONNECTION = "pgsql"
+CACHE_DRIVER = "file"
+FILESYSTEM_DISK = "local"
+QUEUE_CONNECTION = "sync"
+SESSION_DRIVER = "file"
+SESSION_LIFETIME = "120"
+BROADCAST_DRIVER = "log"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "php artisan serve --host=0.0.0.0 --port=5000 & npm run dev"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 5173
+externalPort = 5173
