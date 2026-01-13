@@ -45,7 +45,7 @@ export default function PropertyCard({ property, user }) {
                 </div>
                 
                 <div className="flex justify-between items-center mt-2">
-                    <p className="text-lg font-extrabold text-blue-600">${Number(property.price).toLocaleString()}
+                    <p className="text-lg font-extrabold text-blue-600">₦{Number(property.price).toLocaleString()}
                         <span className="text-xs font-normal text-gray-500"> / {property.price_period}</span>
                     </p>
                     <div className="flex space-x-4 text-sm text-gray-600">

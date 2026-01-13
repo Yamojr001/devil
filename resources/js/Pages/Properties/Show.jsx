@@ -87,7 +87,7 @@ export default function Show({ auth, property, isFavorited }) {
                     <div className="lg:col-span-1">
                         <div className="bg-white p-6 rounded-lg shadow-md sticky top-8">
                              <p className="text-3xl font-extrabold text-blue-600">
-                                ${Number(property.price).toLocaleString()}
+                                ₦{Number(property.price).toLocaleString()}
                                 <span className="text-base font-normal text-gray-500"> / {property.price_period}</span>
                             </p>
                             <div className="flex space-x-4 text-sm text-gray-600 mt-2 border-b pb-4">

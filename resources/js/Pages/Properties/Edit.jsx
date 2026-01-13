@@ -99,7 +99,7 @@ export default function Edit({ auth, property }) {
                                 <div><InputLabel htmlFor="property_type" value="Property Type" /><select id="property_type" value={data.property_type} onChange={e => setData('property_type', e.target.value)} className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"><option>Apartment</option><option>Bungalow</option><option>Duplex</option><option>Villa</option></select></div>
                             </div>
                             <div className="grid grid-cols-2 gap-4 mt-4">
-                                <div><InputLabel htmlFor="price" value="Price ($)" /><TextInput type="number" id="price" value={data.price} onChange={e => setData('price', e.target.value)} className="mt-1 block w-full" required /></div>
+                                <div><InputLabel htmlFor="price" value="Price (₦)" /><TextInput type="number" id="price" value={data.price} onChange={e => setData('price', e.target.value)} className="mt-1 block w-full" required /></div>
                                 <div><InputLabel htmlFor="price_period" value="Per" /><select id="price_period" value={data.price_period} onChange={e => setData('price_period', e.target.value)} className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"><option value="month">Month</option><option value="year">Year</option></select></div>
                             </div>
                             <hr className="my-4" />

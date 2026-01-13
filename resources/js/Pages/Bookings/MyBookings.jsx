@@ -2,8 +2,8 @@
 // This is the complete and final version with countdown timer.
 
 import SidebarLayout from '@/Layouts/SidebarLayout';
-import { Head, Link } from '@inertiajs/react';
-import { FaEye, FaCreditCard } from 'react-icons/fa';
+import { Head, Link, usePage } from '@inertiajs/react';
+import { FaEye, FaCreditCard, FaPhone } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 
 // --- A New, Reusable Countdown Timer Component ---
@@ -73,7 +73,13 @@ const BookingCard = ({ booking }) => {
                     </div>
                     
                     {booking.status === 'approved' && booking.expires_at && (
-                        <div className="my-4 p-4 bg-blue-50 rounded-lg text-center">
+                        <div className="my-4 p-4 bg-green-50 border border-green-200 rounded-lg text-center">
+                            <h4 className="font-bold text-green-800">Booking Approved!</h4>
+                            <p className="text-sm text-green-700 mt-1">
+                                Landlord Phone: <span className="font-bold">{booking.property.user?.phone || 'N/A'}</span>
+                            </p>
+                            <p className="text-xs text-green-600 mt-2">Please contact the landlord to view the property.</p>
+                            <hr className="my-3 border-green-200" />
                             <h4 className="font-bold text-blue-800">Payment Required to Secure</h4>
                             <p className="text-xs text-blue-700 mb-2">This offer will expire in:</p>
                             <CountdownTimer expiryDate={booking.expires_at} />
@@ -100,6 +106,16 @@ const BookingCard = ({ booking }) => {
 };
 
 export default function MyBookings({ auth, bookings }) {
+    const { props } = usePage();
+    const flash = props.flash || {};
+
+    useEffect(() => {
+        const approvedBooking = bookings.find(b => b.status === 'approved');
+        if (approvedBooking && !flash.notified) {
+            alert("Congratulations! One of your booking requests has been approved. Please check your bookings page for landlord details.");
+        }
+    }, [bookings]);
+
     return (
         <SidebarLayout user={auth.user} header="My Bookings">
             <Head title="My Bookings" />

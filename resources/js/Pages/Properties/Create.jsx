@@ -98,7 +98,7 @@ export default function Create({ auth }) {
                         <h3 className="text-lg font-bold text-gray-800 mb-4">Price & Capacity</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <InputLabel htmlFor="price" value="Price ($)" />
+                                <InputLabel htmlFor="price" value="Price (₦)" />
                                 <TextInput id="price" type="number" name="price" value={data.price} className="mt-1 block w-full" onChange={(e) => setData('price', e.target.value)} required />
                             </div>
                             <div>
@@ -118,9 +118,6 @@ export default function Create({ auth }) {
                                     min="1"
                                     required
                                 />
-                                <p className="text-xs text-gray-500 mt-1">
-                                    The system will add a small buffer to this number for booking requests. This is the exact number of tenants who will be allowed to pay.
-                                </p>
                                 <InputError message={errors.accepted_tenants} className="mt-2" />
                             </div>
 
