@@ -14,8 +14,8 @@ class MonnifyPaymentController extends Controller
         $booking->load('property');
         return Inertia::render('Payments/Create', [
             'booking' => $booking,
-            'monnify_api_key' => env('MONNIFY_API_KEY'),
-            'monnify_contract_code' => env('MONNIFY_CONTRACT_CODE'),
+            'monnify_api_key' => config('services.monnify.api_key', env('MONNIFY_API_KEY')),
+            'monnify_contract_code' => config('services.monnify.contract_code', env('MONNIFY_CONTRACT_CODE')),
         ]);
     }
 
@@ -27,11 +27,8 @@ class MonnifyPaymentController extends Controller
         ]);
 
         $booking = Booking::findOrFail($request->booking_id);
-        
-        // Update booking status
         $booking->update(['status' => 'paid']);
         
-        // Mark property as unavailable if slots are full
         $property = $booking->property;
         $paidCount = $property->bookings()->where('status', 'paid')->count();
         if ($paidCount >= $property->accepted_tenants) {
@@ -44,7 +41,7 @@ class MonnifyPaymentController extends Controller
     public function webhook(Request $request)
     {
         $data = $request->all();
-        Log::info('Monnify Webhook:', $data);
+        Log::info('Monnify Webhook Received', ['payload' => $data]);
         
         if (isset($data['paymentReference']) && ($data['paymentStatus'] === 'PAID' || $data['paymentStatus'] === 'SUCCESS')) {
             $bookingId = $data['metaData']['booking_id'] ?? null;
