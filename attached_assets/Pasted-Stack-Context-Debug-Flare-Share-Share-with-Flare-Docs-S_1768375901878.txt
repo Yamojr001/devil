@@ -1,0 +1,373 @@
+Stack
+Context
+Debug
+Flare
+Share
+Share with Flare
+Docs
+
+Stack
+
+Context
+
+Debug
+Create Share
+Docs
+
+Ignition Settings
+Docs
+Editor
+
+PhpStorm
+Theme
+auto
+Save settings
+Settings will be saved locally in ~/.ignition.json.
+
+SQLSTATE[01000]: Warning: 1265 Data truncated for column 'status' at row 1 (Connection: mysql, SQL: update `bookings` set `status` = paid, `bookings`.`updated_at` = 2026-01-14 07:31:28 where `id` = 2)
+Illuminate
+ \ 
+Database
+ \ 
+QueryException
+PHP 8.4.16
+10.48.29
+SQLSTATE[01000]: Warning: 1265 Data truncated for column 'status' at row 1
+update `bookings` set `status` = paid, `bookings`.`updated_at` = 2026-01-14 07:31:28 where `id` = 2
+
+
+
+Expand vendor frames
+9 vendor frames
+App
+ \ 
+Http
+ \ 
+Controllers
+ \ 
+MonnifyPaymentController
+ 
+: 32
+verify
+51 vendor frames
+public
+ / 
+index
+.php
+ 
+: 51
+require_once
+1 vendor frame
+app
+ / 
+Http
+ / 
+Controllers
+ / 
+MonnifyPaymentController
+.php
+ 
+: 32
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            'monnify_api_key' => env('MONNIFY_API_KEY'),
+
+            'monnify_contract_code' => env('MONNIFY_CONTRACT_CODE'),
+
+        ]);
+
+    }
+
+
+
+    public function verify(Request $request)
+
+    {
+
+        $request->validate([
+
+            'transactionReference' => 'required',
+
+            'booking_id' => 'required|exists:bookings,id'
+
+        ]);
+
+
+
+        $booking = Booking::findOrFail($request->booking_id);
+
+
+
+        // Update booking status
+
+        $booking->update(['status' => 'paid']);
+
+
+
+        // Mark property as unavailable if slots are full
+
+        $property = $booking->property;
+
+        $paidCount = $property->bookings()->where('status', 'paid')->count();
+
+        if ($paidCount >= $property->accepted_tenants) {
+
+            $property->update(['is_available' => false]);
+
+        }
+
+
+
+        return response()->json(['success' => true]);
+
+    }
+
+
+
+    public function webhook(Request $request)
+
+    {
+
+        $data = $request->all();
+App
+Routing
+Request
+Browser
+Headers
+Body
+Context
+User
+Git
+Versions
+Exception
+App
+Routing
+Controller
+App\Http\Controllers\MonnifyPaymentController@verify
+
+Route name
+payments.verify
+
+Middleware
+web
+
+auth
+
+verified
+
+Request
+http://127.0.0.1:8000/payments/verify
+POST
+curl "http://127.0.0.1:8000/payments/verify" \
+   -X POST \
+   -H 'host: 127.0.0.1:8000' \
+   -H 'connection: keep-alive' \
+   -H 'content-length: 71' \
+   -H 'sec-ch-ua-platform: "Linux"' \
+   -H 'x-xsrf-token: <CENSORED>' \
+   -H 'sec-ch-ua: "Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"' \
+   -H 'x-inertia: true' \
+   -H 'sec-ch-ua-mobile: ?0' \
+   -H 'x-requested-with: XMLHttpRequest' \
+   -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36' \
+   -H 'accept: text/html, application/xhtml+xml' \
+   -H 'content-type: application/json' \
+   -H 'origin: http://127.0.0.1:8000' \
+   -H 'sec-fetch-site: same-origin' \
+   -H 'sec-fetch-mode: cors' \
+   -H 'sec-fetch-dest: empty' \
+   -H 'referer: http://127.0.0.1:8000/payments/2' \
+   -H 'accept-encoding: gzip, deflate, br, zstd' \
+   -H 'accept-language: en-US,en;q=0.9' \
+   -H 'cookie: <CENSORED>' \
+   -F 'transactionReference=MNFY|37|20260114083056|000201' -F 'booking_id=2'
+
+
+Browser
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+
+Headers
+host
+127.0.0.1:8000
+
+connection
+keep-alive
+
+content-length
+71
+
+sec-ch-ua-platform
+"Linux"
+
+x-xsrf-token
+<CENSORED>
+
+sec-ch-ua
+"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+
+x-inertia
+true
+
+sec-ch-ua-mobile
+?0
+
+x-requested-with
+XMLHttpRequest
+
+user-agent
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+
+accept
+text/html, application/xhtml+xml
+
+content-type
+application/json
+
+origin
+http://127.0.0.1:8000
+
+sec-fetch-site
+same-origin
+
+sec-fetch-mode
+cors
+
+sec-fetch-dest
+empty
+
+referer
+http://127.0.0.1:8000/payments/2
+
+accept-encoding
+gzip, deflate, br, zstd
+
+accept-language
+en-US,en;q=0.9
+
+cookie
+<CENSORED>
+
+Body
+{
+    "transactionReference": "MNFY|37|20260114083056|000201",
+    "booking_id": 2
+}
+
+Context
+User
+yamojr001@gmail.com
+jamilu yusuf musa
+
+yamojr001@gmail.com
+
+{
+    "id": 1,
+    "name": "jamilu yusuf musa",
+    "email": "yamojr001@gmail.com",
+    "email_verified_at": null,
+    "role": "tenant",
+    "phone": null,
+    "nin": null,
+    "staff_id": null,
+    "created_at": "2026-01-08T18:19:00.000000Z",
+    "updated_at": "2026-01-09T08:37:34.000000Z",
+    "dob": null,
+    "nationality": "nig",
+    "address_street": null,
+    "address_city": "kn",
+    "address_state": null,
+    "address_country": null,
+    "id_type": null,
+    "id_number": null,
+    "id_document_path": null
+}
+
+
+Git
+Saved progress at the end of the loop
+4ab9f0a4e0d760d58cdf569d4223cf46a5ba9110
+
+View commit 4ab9f0a
+Last commit is dirty. (Un)staged changes have been made since this commit.
+
+Versions
+Php Version
+8.4.16
+
+Laravel Version
+10.48.29
+
+Laravel Locale
+en
+
+Laravel Config Cached
+false
+App Debug
+true
+App Env
+local
+
+Exception
+Raw Sql
+update `bookings` set `status` = ?, `bookings`.`updated_at` = ? where `id` = ?
+
+
+3
+Queries
+8:31:28 AM
+5.02ms
+mysql
+select * from `users` where `id` = 1 limit 1
+
+
+1 query parameter
+8:31:28 AM
+1.49ms
+mysql
+select count(*) as aggregate from `bookings` where `id` = 2
+
+
+1 query parameter
+8:31:28 AM
+1.33ms
+mysql
+select * from `bookings` where `bookings`.`id` = 2 limit 1
+
+
+1 query parameter
+·
+Source
+·
+Docs
+·
+Laravel
+Ignition is built byFlare, the Laravel error reporting service.
