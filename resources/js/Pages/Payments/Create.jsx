@@ -42,10 +42,9 @@ export default function Create({ auth, booking, monnify_api_key, monnify_contrac
                         transactionReference: response.transactionReference,
                         booking_id: booking.id
                     }, {
-                        onSuccess: () => {
-                            router.visit(route('my-bookings.index'), {
-                                data: { success: "Payment successful! Your booking is now confirmed." }
-                            });
+                        onSuccess: (page) => {
+                            // The success message will be in the flash session
+                            router.visit(route('my-bookings.index'));
                         }
                     });
                 }

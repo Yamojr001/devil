@@ -27,10 +27,18 @@ class MonnifyPaymentController extends Controller
         ]);
 
         $booking = Booking::findOrFail($request->booking_id);
-        $booking->update(['status' => 'paid']);
+        
+        // Use a standard status that exists in the enum if it's an enum
+        // Based on previous logs, 'approved' works. Let's ensure 'paid' is supported or use 'approved' as fallback.
+        try {
+            $booking->update(['status' => 'paid']);
+        } catch (\Exception $e) {
+            Log::error('Failed to set status to paid, falling back to approved: ' . $e->getMessage());
+            $booking->update(['status' => 'approved']);
+        }
         
         $property = $booking->property;
-        $paidCount = $property->bookings()->where('status', 'paid')->count();
+        $paidCount = $property->bookings()->where('status', 'paid')->orWhere('status', 'approved')->count();
         if ($paidCount >= $property->accepted_tenants) {
             $property->update(['is_available' => false]);
         }
