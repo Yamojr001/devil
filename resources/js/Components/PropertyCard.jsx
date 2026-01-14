@@ -17,10 +17,10 @@ export default function PropertyCard({ property, user }) {
         router.post(route('favorites.toggle', property.id), {}, { preserveScroll: true });
     };
 
-    // Correctly calculate available slots from the data provided by the controller
     const totalBookings = property.total_bookings_count || 0;
     const paidBookings = property.paid_bookings_count || 0;
-    const availableSlots = property.accepted_tenants - paidBookings;
+    const acceptedTenants = property.accepted_tenants || 1;
+    const availableSlots = acceptedTenants - paidBookings;
 
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 group flex flex-col">
@@ -43,11 +43,11 @@ export default function PropertyCard({ property, user }) {
                 <div className="mt-2 flex flex-col space-y-1">
                     <div className={`flex items-center text-sm font-semibold ${availableSlots > 0 ? 'text-green-600' : 'text-red-600'}`}>
                         <FaUsers className="mr-2" />
-                        <span>{availableSlots > 0 ? `${availableSlots} Slot(s) Left!` : 'All Slots Full'}</span>
+                        <span>{availableSlots > 0 ? `${availableSlots} Slot(s) Free` : 'All Slots Full'}</span>
                     </div>
                     <div className="flex justify-between text-xs text-gray-500">
                         <span>Total Requests: {totalBookings}</span>
-                        <span>Paid: {paidBookings} / {property.accepted_tenants}</span>
+                        <span>Paid: {paidBookings} / {acceptedTenants}</span>
                     </div>
                 </div>
                 
