@@ -80,10 +80,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('my-favorites.index');
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
     
-    // -- Payment Route (Moved outside staff group to be accessible by tenants) --
-    Route::get('/payments/{booking}', function (\App\Models\Booking $booking) {
-        return Inertia::render('Payments/Create', ['booking' => $booking->load('property')]);
-    })->name('payments.create');
+    // -- Payment Route --
+    Route::get('/payments/{booking}', [MonnifyPaymentController::class, 'show'])->name('payments.create');
+    Route::post('/payments/verify', [MonnifyPaymentController::class, 'verify'])->name('payments.verify');
+    Route::post('/payments/webhook', [MonnifyPaymentController::class, 'webhook'])->name('payments.webhook')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     
     // -- Functionality Routes (used by multiple roles) --
     Route::delete('/property-images/{propertyImage}', [PropertyImageController::class, 'destroy'])->name('properties.images.destroy');
