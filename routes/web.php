@@ -80,6 +80,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('my-favorites.index');
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
     
+    // -- Payment Route (Moved outside staff group to be accessible by tenants) --
+    Route::get('/payments/{booking}', function (\App\Models\Booking $booking) {
+        return Inertia::render('Payments/Create', ['booking' => $booking->load('property')]);
+    })->name('payments.create');
+    
     // -- Functionality Routes (used by multiple roles) --
     Route::delete('/property-images/{propertyImage}', [PropertyImageController::class, 'destroy'])->name('properties.images.destroy');
     Route::post('/favorites/{property}/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
@@ -114,10 +119,6 @@ Route::middleware(['auth', 'verified', 'staff'])->prefix('staff')->name('staff.'
             'contacts' => $contacts
         ]);
     })->name('contacts.index');
-    // -- Payment Route --
-    Route::get('/payments/{booking}', function (\App\Models\Booking $booking) {
-        return Inertia::render('Payments/Create', ['booking' => $booking->load('property')]);
-    })->name('payments.create');
 });
 
 require __DIR__.'/auth.php';
