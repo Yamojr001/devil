@@ -96,7 +96,7 @@ const BookingCard = ({ booking }) => {
                                 <FaEye className="mr-2" /> View
                             </Link>
                             {booking.status === 'approved' && (
-                                <Link href="#" className="flex items-center px-3 py-1 bg-green-600 text-white rounded-md text-sm hover:bg-green-500">
+                                <Link href={route('payments.create', booking.id)} className="flex items-center px-3 py-1 bg-green-600 text-white rounded-md text-sm hover:bg-green-500">
                                     <FaCreditCard className="mr-2" /> Proceed to Payment
                                 </Link>
                             )}

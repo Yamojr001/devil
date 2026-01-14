@@ -18,8 +18,9 @@ export default function PropertyCard({ property, user }) {
     };
 
     // Correctly calculate available slots from the data provided by the controller
-    const approvedBookings = property.bookings_count;
-    const availableSlots = property.possible_tenants - approvedBookings;
+    const totalBookings = property.total_bookings_count || 0;
+    const paidBookings = property.paid_bookings_count || 0;
+    const availableSlots = property.accepted_tenants - paidBookings;
 
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 group flex flex-col">
@@ -39,9 +40,15 @@ export default function PropertyCard({ property, user }) {
                 </h3>
                 <p className="text-sm text-gray-500 flex items-center mt-1"><FaMapMarkerAlt className="mr-2" />{property.city}, {property.state}</p>
                 
-                <div className={`mt-2 flex items-center text-sm font-semibold ${availableSlots > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    <FaUsers className="mr-2" />
-                    <span>{availableSlots > 0 ? `${availableSlots} Booking Slot(s) Left!` : 'All Booking Slots Full'}</span>
+                <div className="mt-2 flex flex-col space-y-1">
+                    <div className={`flex items-center text-sm font-semibold ${availableSlots > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        <FaUsers className="mr-2" />
+                        <span>{availableSlots > 0 ? `${availableSlots} Slot(s) Left!` : 'All Slots Full'}</span>
+                    </div>
+                    <div className="flex justify-between text-xs text-gray-500">
+                        <span>Total Requests: {totalBookings}</span>
+                        <span>Paid: {paidBookings} / {property.accepted_tenants}</span>
+                    </div>
                 </div>
                 
                 <div className="flex justify-between items-center mt-2">

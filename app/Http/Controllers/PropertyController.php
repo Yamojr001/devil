@@ -21,7 +21,10 @@ class PropertyController extends Controller
         $user = Auth::user();
         $properties = Property::where('is_available', true)
             ->with('images')
-            ->withCount(['bookings' => fn($q) => $q->where('status', 'approved')])
+            ->withCount([
+                'bookings as total_bookings_count',
+                'bookings as paid_bookings_count' => fn($q) => $q->where('status', 'paid')
+            ])
             ->latest()
             ->get()
             ->map(function ($property) use ($user) {
@@ -167,7 +170,10 @@ class PropertyController extends Controller
         $properties = $request->user()
             ->properties()
             ->with('images')
-            ->withCount(['bookings' => fn($q) => $q->where('status', 'approved')])
+            ->withCount([
+                'bookings as total_bookings_count',
+                'bookings as paid_bookings_count' => fn($q) => $q->where('status', 'paid')
+            ])
             ->latest()
             ->get();
         return Inertia::render('Properties/MyProperties', [

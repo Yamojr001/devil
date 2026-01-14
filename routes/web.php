@@ -114,6 +114,10 @@ Route::middleware(['auth', 'verified', 'staff'])->prefix('staff')->name('staff.'
             'contacts' => $contacts
         ]);
     })->name('contacts.index');
+    // -- Payment Route --
+    Route::get('/payments/{booking}', function (\App\Models\Booking $booking) {
+        return Inertia::render('Payments/Create', ['booking' => $booking->load('property')]);
+    })->name('payments.create');
 });
 
 require __DIR__.'/auth.php';
