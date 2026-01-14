@@ -8,7 +8,7 @@ import { useState } from 'react';
 export default function PropertyCard({ property, user }) {
     const [isFavorited, setIsFavorited] = useState(property.is_favorited);
     const imageUrl = property.images && property.images.length > 0
-        ? `/${property.images[0].image_path}`
+        ? `/storage/${property.images[0].image_path}`
         : `https://via.placeholder.com/400x300.png?text=No+Image`;
         
     const handleFavorite = (e) => {

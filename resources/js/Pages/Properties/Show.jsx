@@ -9,7 +9,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 export default function Show({ auth, property, isFavorited }) {
     const [mainImage, setMainImage] = useState(
         property.images && property.images.length > 0
-            ? `/${property.images[0].image_path}`
+            ? `/storage/${property.images[0].image_path}`
             : 'https://via.placeholder.com/800x600.png?text=No+Image'
     );
 
@@ -34,10 +34,10 @@ export default function Show({ auth, property, isFavorited }) {
                                 {property.images.map(image => (
                                     <img 
                                         key={image.id}
-                                        src={`/${image.image_path}`} 
+                                        src={`/storage/${image.image_path}`} 
                                         alt="Property thumbnail" 
-                                        className={`w-full h-24 object-cover rounded-md cursor-pointer border-2 ${mainImage === `/${image.image_path}` ? 'border-blue-500' : 'border-transparent'}`}
-                                        onClick={() => setMainImage(`/${image.image_path}`)}
+                                        className={`w-full h-24 object-cover rounded-md cursor-pointer border-2 ${mainImage === `/storage/${image.image_path}` ? 'border-blue-500' : 'border-transparent'}`}
+                                        onClick={() => setMainImage(`/storage/${image.image_path}`)}
                                     />
                                 ))}
                             </div>
