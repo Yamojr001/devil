@@ -37,6 +37,7 @@ export default function Edit({ auth, property }) {
         city: property.city || '',
         address: property.address || '',
         amenities: property.amenities ? (Array.isArray(property.amenities) ? property.amenities : property.amenities.split(',')) : [],
+        accepted_tenants: property.accepted_tenants || 1,
         new_images: [],
     });
 
@@ -101,6 +102,11 @@ export default function Edit({ auth, property }) {
                             <div className="grid grid-cols-2 gap-4 mt-4">
                                 <div><InputLabel htmlFor="price" value="Price (₦)" /><TextInput type="number" id="price" value={data.price} onChange={e => setData('price', e.target.value)} className="mt-1 block w-full" required /></div>
                                 <div><InputLabel htmlFor="price_period" value="Per" /><select id="price_period" value={data.price_period} onChange={e => setData('price_period', e.target.value)} className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"><option value="month">Month</option><option value="year">Year</option></select></div>
+                            </div>
+                            <div className="mt-4">
+                                <InputLabel htmlFor="accepted_tenants" value="Number of Tenants to Accept" />
+                                <TextInput id="accepted_tenants" type="number" value={data.accepted_tenants} onChange={e => setData('accepted_tenants', e.target.value)} className="mt-1 block w-full" required />
+                                <InputError message={errors.accepted_tenants} className="mt-2" />
                             </div>
                             <hr className="my-4" />
                             <h4 className="text-md font-bold text-gray-700 mb-2">Amenities</h4>

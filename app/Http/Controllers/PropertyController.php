@@ -125,6 +125,7 @@ class PropertyController extends Controller
             'bedrooms' => 'required|integer|min:1', 'bathrooms' => 'required|integer|min:1',
             'country' => 'required|string', 'state' => 'required|string', 'city' => 'required|string',
             'address' => 'nullable|string', 'amenities' => 'nullable|array',
+            'accepted_tenants' => 'required|integer|min:1|max:100',
             'new_images' => 'nullable|array', 'new_images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
         DB::beginTransaction();
@@ -133,6 +134,8 @@ class PropertyController extends Controller
             $propertyData = $validated;
             unset($propertyData['new_images']);
             $propertyData['amenities'] = $amenities_str;
+            $propertyData['accepted_tenants'] = (int)$validated['accepted_tenants'];
+            $propertyData['possible_tenants'] = (int)$validated['accepted_tenants'];
             $property->update($propertyData);
             if ($request->hasFile('new_images')) {
                 foreach ($request->file('new_images') as $imageFile) {

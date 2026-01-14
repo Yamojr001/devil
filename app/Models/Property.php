@@ -32,6 +32,8 @@ class Property extends Model
         'address',
         'amenities',
         'is_available',
+        'accepted_tenants',
+        'possible_tenants',
     ];
 
     /**
