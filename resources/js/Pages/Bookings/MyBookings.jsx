@@ -74,12 +74,15 @@ const BookingCard = ({ booking }) => {
                     
                     {booking.status === 'approved' && booking.expires_at && (
                         <div className="my-4 p-4 bg-green-50 border border-green-200 rounded-lg text-center">
-                            <h4 className="font-bold text-green-800">Booking Approved!</h4>
-                            <p className="text-sm text-green-700 mt-1">
-                                Landlord Phone: <span className="font-bold">{booking.property.user?.phone || 'N/A'}</span>
+                            <h4 className="font-bold text-green-800 text-lg">Congratulations! Your Booking is Approved!</h4>
+                            <p className="text-sm text-green-700 mt-2 font-semibold">
+                                Please contact the landlord to view the property:
                             </p>
-                            <p className="text-xs text-green-600 mt-2">Please contact the landlord to view the property.</p>
-                            <hr className="my-3 border-green-200" />
+                            <div className="mt-2 flex items-center justify-center bg-white border border-green-300 rounded-lg p-2 shadow-sm">
+                                <FaPhone className="text-green-600 mr-2" />
+                                <span className="font-bold text-xl text-green-800">{booking.property.user?.phone || 'N/A'}</span>
+                            </div>
+                            <hr className="my-4 border-green-200" />
                             <h4 className="font-bold text-blue-800">Payment Required to Secure</h4>
                             <p className="text-xs text-blue-700 mb-2">This offer will expire in:</p>
                             <CountdownTimer expiryDate={booking.expires_at} />

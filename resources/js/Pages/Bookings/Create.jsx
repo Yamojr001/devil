@@ -56,7 +56,7 @@ export default function Create({ auth, property, hasExistingBooking }) {
                         <div>
                             <h3 className="font-bold text-lg">{property.title}</h3>
                             <p className="text-sm text-gray-500 flex items-center mt-1"><FaMapMarkerAlt className="mr-1" /> {property.city}, {property.state}</p>
-                            <p className="text-lg font-bold text-blue-600 mt-1">${Number(property.price).toLocaleString()} <span className="text-sm font-normal">/ {property.price_period}</span></p>
+                            <p className="text-lg font-bold text-blue-600 mt-1">₦{Number(property.price).toLocaleString()} <span className="text-sm font-normal">/ {property.price_period}</span></p>
                         </div>
                     </div>
                     
@@ -67,7 +67,7 @@ export default function Create({ auth, property, hasExistingBooking }) {
                             <DetailItem icon={<FaBed />} label="Bedrooms" value={property.bedrooms} />
                             <DetailItem icon={<FaBath />} label="Bathrooms" value={property.bathrooms} />
                             <DetailItem icon={<FaBuilding />} label="Type" value={property.property_type} />
-                            <DetailItem icon={<FaDollarSign />} label="Price" value={`$${Number(property.price).toLocaleString()}`} />
+                            <DetailItem icon={<FaDollarSign />} label="Price" value={`₦${Number(property.price).toLocaleString()}`} />
                         </div>
                         <div className="mt-3">
                             <p className="text-xs text-gray-400 font-bold uppercase">Full Address</p>
@@ -91,6 +91,7 @@ export default function Create({ auth, property, hasExistingBooking }) {
                             <div className="w-12 h-12 rounded-full bg-gray-200 mr-4"></div>
                             <div>
                                 <p className="font-bold">{property.user.name}</p>
+                                <p className="text-sm text-gray-500">Phone: {property.user.phone || 'N/A'}</p>
                                 <p className="text-sm text-gray-500">Member since {new Date(property.user.created_at).getFullYear()}</p>
                             </div>
                         </div>

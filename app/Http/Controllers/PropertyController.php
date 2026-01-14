@@ -60,9 +60,7 @@ class PropertyController extends Controller
             'images' => 'required|array|min:1', 'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
         $acceptedTenants = (int)$validated['accepted_tenants'];
-        $buffer = 0;
-        if ($acceptedTenants <= 5) $buffer = 1; elseif ($acceptedTenants <= 10) $buffer = 2; elseif ($acceptedTenants <= 15) $buffer = 3; else $buffer = 4;
-        $possibleTenants = $acceptedTenants + $buffer;
+        $possibleTenants = $acceptedTenants; // No buffer
         DB::beginTransaction();
         try {
             $amenities_str = !empty($validated['amenities']) ? implode(',', $validated['amenities']) : null;

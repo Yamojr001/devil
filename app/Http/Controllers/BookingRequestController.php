@@ -34,7 +34,7 @@ class BookingRequestController extends Controller
             ->when($status !== 'all', function ($query) use ($status) {
                 return $query->where('status', $status);
             })
-            ->with(['tenant', 'property.images'])
+            ->with(['tenant', 'property.images', 'property.user'])
             ->latest()
             ->get();
         
