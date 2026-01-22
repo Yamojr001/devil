@@ -28,11 +28,22 @@ use App\Http\Controllers\DeletionRequestController;
 
 // --- Public Welcome Route ---
 Route::get('/', function () {
+    $latestProperties = \App\Models\Property::where('is_available', true)
+        ->with(['images', 'user'])
+        ->withCount([
+            'bookings as total_bookings_count',
+            'bookings as paid_bookings_count' => fn($q) => $q->where('status', 'paid')
+        ])
+        ->latest()
+        ->take(20)
+        ->get();
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'latestProperties' => $latestProperties,
     ]);
 });
 

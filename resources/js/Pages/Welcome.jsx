@@ -8,7 +8,7 @@ import Properties from '@/Components/PropertyListing.jsx';
 import Footer from '@/Components/Footer';
 import houseImage from '../../images/propty.jpeg';
 
-export default function Welcome({ auth }) {
+export default function Welcome({ auth, latestProperties }) {
    
   const textVariants = {
     hidden: { opacity: 0, x: -100 },
@@ -114,7 +114,7 @@ export default function Welcome({ auth }) {
             <HowItWorks />
             <Features />
             <AboutUs />
-            <Properties />
+            <Properties latestProperties={latestProperties} />
             <Footer/>
 
 
