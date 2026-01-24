@@ -86,9 +86,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
          ->name('properties.request-deletion');
 
     // -- Tenant-Specific Routes --
-    Route::get('/my-bookings', [BookingController::class, 'index'])->name('my-bookings.index');
-    Route::get('/bookings/{property}/create', [BookingController::class, 'create'])->name('bookings.create');
-    Route::post('/bookings/{property}', [BookingController::class, 'store'])->name('bookings.store');
+    Route::middleware(['profile.complete'])->group(function () {
+        Route::get('/my-bookings', [BookingController::class, 'index'])->name('my-bookings.index');
+        Route::get('/bookings/{property}/create', [BookingController::class, 'create'])->name('bookings.create');
+        Route::post('/bookings/{property}', [BookingController::class, 'store'])->name('bookings.store');
+    });
     Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('my-favorites.index');
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
     

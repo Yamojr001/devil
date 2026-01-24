@@ -58,6 +58,20 @@ export default function Navbar({ auth }) {
               ></div>
             </div>
           ))}
+          
+          {/* New Custom Buttons */}
+          <Link
+            href={route('login')}
+            className="text-[#222222] text-lg font-medium hover:text-orange-400 transition duration-300"
+          >
+            Book Hotel
+          </Link>
+          <Link
+            href={route('login')}
+            className="text-[#222222] text-lg font-medium hover:text-orange-400 transition duration-300"
+          >
+            Buy Property
+          </Link>
         </div>
 
         {/* DESKTOP AUTH BUTTONS */}
