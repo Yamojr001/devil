@@ -61,6 +61,18 @@ export default function Navbar({ auth }) {
           
           {/* New Custom Buttons */}
           <Link
+            href={route('properties.index', { type: 'rent' })}
+            className="text-[#222222] text-lg font-medium hover:text-orange-400 transition duration-300"
+          >
+            For Rent
+          </Link>
+          <Link
+            href={route('properties.index', { type: 'sell' })}
+            className="text-[#222222] text-lg font-medium hover:text-orange-400 transition duration-300"
+          >
+            For Sale
+          </Link>
+          <Link
             href={route('login')}
             className="text-[#222222] text-lg font-medium hover:text-orange-400 transition duration-300"
           >

@@ -88,7 +88,9 @@ export default function Show({ auth, property, isFavorited }) {
                         <div className="bg-white p-6 rounded-lg shadow-md sticky top-8">
                              <p className="text-3xl font-extrabold text-blue-600">
                                 ₦{Number(property.price).toLocaleString()}
-                                <span className="text-base font-normal text-gray-500"> / {property.price_period}</span>
+                                {property.listing_type === 'rent' && (
+                                    <span className="text-base font-normal text-gray-500"> / {property.price_period}</span>
+                                )}
                             </p>
                             <div className="flex space-x-4 text-sm text-gray-600 mt-2 border-b pb-4">
                                 <span className="flex items-center"><FaBed className="mr-1" /> {property.bedrooms} Bedrooms</span>
@@ -115,7 +117,7 @@ export default function Show({ auth, property, isFavorited }) {
                                         onClick={handleBookNow}
                                         className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white"
                                     >
-                                        Book Now
+                                        {property.listing_type === 'rent' ? 'Book Now' : 'Buy Now'}
                                     </PrimaryButton>
                                 )}
                                 <button className={`w-full py-2 px-4 border rounded-lg font-semibold ${isFavorited ? 'bg-red-100 border-red-500 text-red-600' : 'border-gray-300'}`}>

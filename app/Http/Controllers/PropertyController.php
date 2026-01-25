@@ -16,10 +16,16 @@ class PropertyController extends Controller
     /**
      * Display a listing of all available resources for tenants and guests.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $properties = Property::where('is_available', true)
+        $query = Property::where('is_available', true);
+
+        if ($request->has('type')) {
+            $query->where('listing_type', $request->type);
+        }
+
+        $properties = $query
             ->with('images')
             ->withCount([
                 'bookings as total_bookings_count',
