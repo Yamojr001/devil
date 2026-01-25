@@ -55,6 +55,7 @@ class PropertyController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255', 'description' => 'required|string',
             'property_type' => 'required|string|in:Apartment,Bungalow,Duplex,Villa',
+            'listing_type' => 'required|string|in:rent,sell',
             'price' => 'required|numeric|min:1', 'price_period' => 'required|string|in:month,year',
             'bedrooms' => 'required|integer|min:1', 'bathrooms' => 'required|integer|min:1',
             'country' => 'required|string', 'state' => 'required|string', 'city' => 'required|string',
@@ -121,6 +122,7 @@ class PropertyController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255', 'description' => 'required|string',
             'property_type' => 'required|string|in:Apartment,Bungalow,Duplex,Villa',
+            'listing_type' => 'required|string|in:rent,sell',
             'price' => 'required|numeric|min:1', 'price_period' => 'required|string|in:month,year',
             'bedrooms' => 'required|integer|min:1', 'bathrooms' => 'required|integer|min:1',
             'country' => 'required|string', 'state' => 'required|string', 'city' => 'required|string',

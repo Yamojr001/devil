@@ -32,6 +32,7 @@ export default function Edit({ auth, property }) {
         price_period: property.price_period || 'month',
         bedrooms: property.bedrooms || '1',
         bathrooms: property.bathrooms || '1',
+        listing_type: property.listing_type || 'rent',
         country: property.country || '',
         state: property.state || '',
         city: property.city || '',
@@ -98,6 +99,7 @@ export default function Edit({ auth, property }) {
                                 <div><InputLabel htmlFor="bedrooms" value="Bedrooms" /><TextInput type="number" id="bedrooms" value={data.bedrooms} onChange={e => setData('bedrooms', e.target.value)} className="mt-1 block w-full" required /></div>
                                 <div><InputLabel htmlFor="bathrooms" value="Bathrooms" /><TextInput type="number" id="bathrooms" value={data.bathrooms} onChange={e => setData('bathrooms', e.target.value)} className="mt-1 block w-full" required /></div>
                                 <div><InputLabel htmlFor="property_type" value="Property Type" /><select id="property_type" value={data.property_type} onChange={e => setData('property_type', e.target.value)} className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"><option>Apartment</option><option>Bungalow</option><option>Duplex</option><option>Villa</option></select></div>
+                                <div><InputLabel htmlFor="listing_type" value="Listing Type" /><select id="listing_type" value={data.listing_type} onChange={e => setData('listing_type', e.target.value)} className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"><option value="rent">Rent</option><option value="sell">Sell</option></select></div>
                             </div>
                             <div className="grid grid-cols-2 gap-4 mt-4">
                                 <div><InputLabel htmlFor="price" value="Price (₦)" /><TextInput type="number" id="price" value={data.price} onChange={e => setData('price', e.target.value)} className="mt-1 block w-full" required /></div>

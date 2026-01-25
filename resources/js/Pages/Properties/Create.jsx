@@ -19,10 +19,11 @@ export default function Create({ auth }) {
     const [currentStep, setCurrentStep] = useState(1);
     const { data, setData, post, processing, errors, reset } = useForm({
         title: '', description: '', property_type: 'Apartment',
+        listing_type: 'rent',
         price: '', price_period: 'month', bedrooms: '1', bathrooms: '1',
         country: '', state: '', city: '', address: '',
         amenities: [],
-        possible_tenants: 6, // <-- New form field with a default value
+        accepted_tenants: 1,
         images: [],
     });
     const [imagePreviews, setImagePreviews] = useState([]);
@@ -91,6 +92,13 @@ export default function Create({ auth }) {
                             <div><InputLabel htmlFor="bedrooms" value="Bedrooms" /><TextInput id="bedrooms" type="number" name="bedrooms" value={data.bedrooms} className="mt-1 block w-full" onChange={(e) => setData('bedrooms', e.target.value)} required /></div>
                             <div><InputLabel htmlFor="bathrooms" value="Bathrooms" /><TextInput id="bathrooms" type="number" name="bathrooms" value={data.bathrooms} className="mt-1 block w-full" onChange={(e) => setData('bathrooms', e.target.value)} required /></div>
                             <div><InputLabel htmlFor="property_type" value="Property Type" /><select id="property_type" name="property_type" value={data.property_type} className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" onChange={(e) => setData('property_type', e.target.value)}><option>Apartment</option><option>Bungalow</option><option>Duplex</option><option>Villa</option></select></div>
+                        </div>
+                        <div className="mt-4">
+                            <InputLabel htmlFor="listing_type" value="Listing Type" />
+                            <select id="listing_type" name="listing_type" value={data.listing_type} className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" onChange={(e) => setData('listing_type', e.target.value)}>
+                                <option value="rent">Rent</option>
+                                <option value="sell">Sell</option>
+                            </select>
                         </div>
                     </WizardStep>
 

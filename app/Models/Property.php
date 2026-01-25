@@ -34,6 +34,7 @@ class Property extends Model
         'is_available',
         'accepted_tenants',
         'possible_tenants',
+        'listing_type',
     ];
 
     /**

@@ -28,6 +28,9 @@ export default function PropertyCard({ property, user }) {
                 <Link href={route('properties.show', property.id)}>
                     <img src={imageUrl} alt={property.title} className="w-full h-56 object-cover" />
                 </Link>
+                <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded uppercase">
+                    For {property.listing_type}
+                </div>
                 {user && user.role === 'tenant' && (
                     <button onClick={handleFavorite} className="absolute top-3 right-3 bg-white rounded-full p-2 leading-none z-10 opacity-75 group-hover:opacity-100 transition-opacity" title={isFavorited ? "Remove from favorites" : "Add to favorites"}>
                         <FaStar className={`text-xl ${isFavorited ? 'text-yellow-400' : 'text-gray-300 hover:text-yellow-300'}`} />
