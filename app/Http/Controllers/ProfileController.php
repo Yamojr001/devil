@@ -76,6 +76,11 @@ class ProfileController extends Controller
         // Update user with validated data
         foreach ($validatedData as $key => $value) {
             if ($key !== 'id_document') { // Skip file field as we handled it separately
+                // Ensure we don't accidentally clear required fields like name/email
+                if (($key === 'name' || $key === 'email') && empty($value)) {
+                    continue;
+                }
+
                 if ($value === '' || $value === null) {
                     $user->$key = null;
                 } else {

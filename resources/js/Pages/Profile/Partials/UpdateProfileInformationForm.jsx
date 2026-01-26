@@ -10,7 +10,7 @@ import { Transition } from '@headlessui/react';
 export default function UpdateProfileInformationForm({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful, reset } = useForm({
+    const { data, setData, post, errors, processing, recentlySuccessful, reset } = useForm({
         name: user.name || '',
         email: user.email || '',
         phone: user.phone || '',
@@ -24,32 +24,16 @@ export default function UpdateProfileInformationForm({ mustVerifyEmail, status, 
         id_type: user.id_type || '',
         id_number: user.id_number || '',
         id_document: null,
+        _method: 'patch',
     });
 
     const submit = (e) => {
         e.preventDefault();
         
-        // Create FormData object manually to ensure all fields are included
-        const formData = new FormData();
-        
-        // Append all form fields
-        Object.keys(data).forEach(key => {
-            if (key === 'id_document') {
-                if (data[key] instanceof File) {
-                    formData.append(key, data[key]);
-                }
-            } else {
-                formData.append(key, data[key] || '');
-            }
-        });
-
-        // Use Inertia's post method with FormData
-        patch(route('profile.update'), formData, {
+        post(route('profile.update'), {
             preserveScroll: true,
             onSuccess: () => {
                 reset('id_document');
-                // Force a reload to get updated user data
-                window.location.reload();
             },
             forceFormData: true,
         });
