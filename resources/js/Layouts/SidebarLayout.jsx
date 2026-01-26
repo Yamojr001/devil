@@ -57,8 +57,14 @@ export default function SidebarLayout({ user, header, children }) {
                     {/* --- Tenant-Specific Links --- */}
                     {user.role === 'tenant' && (
                         <>
-                            <SidebarNavLink href={route('properties.index')} active={route().current('properties.index')}>
-                                <FaBuilding className="mr-3" /> Properties
+                            <SidebarNavLink href={route('properties.index')} active={route().current('properties.index') && !new URLSearchParams(window.location.search).get('type')}>
+                                <FaBuilding className="mr-3" /> All Properties
+                            </SidebarNavLink>
+                            <SidebarNavLink href={route('properties.index', { type: 'rent' })} active={new URLSearchParams(window.location.search).get('type') === 'rent'}>
+                                <FaHome className="mr-3" /> For Rent
+                            </SidebarNavLink>
+                            <SidebarNavLink href={route('properties.index', { type: 'sell' })} active={new URLSearchParams(window.location.search).get('type') === 'sell'}>
+                                <FaBuilding className="mr-3" /> For Sale
                             </SidebarNavLink>
                             <SidebarNavLink href={route('search.index')} active={route().current('search.index')}>
                                 <FaSearch className="mr-3" /> Search
